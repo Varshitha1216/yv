@@ -1,0 +1,31 @@
+#include <vector>
+#include <queue>
+using namespace std;
+
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int n = matrix.size();
+        // Min-heap to store elements: (value, row, col)
+        auto comp = [](const tuple<int,int,int>& a, const tuple<int,int,int>& b) {
+            return get<0>(a) > get<0>(b);
+        };
+        priority_queue<tuple<int,int,int>, vector<tuple<int,int,int>>, decltype(comp)> minHeap(comp);
+        
+        // Initialize heap with the first element of each row
+        for (int i = 0; i < n; ++i) {
+            minHeap.emplace(matrix[i][0], i, 0);
+        }
+        
+        // Extract-min k-1 times
+        for (int i = 0; i < k - 1; ++i) {
+            auto [val, r, c] = minHeap.top();
+            minHeap.pop();
+            if (c + 1 < n) {
+                minHeap.emplace(matrix[r][c + 1], r, c + 1);
+            }
+        }
+        
+        return get<0>(minHeap.top());
+    }
+};
