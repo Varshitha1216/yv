@@ -1,0 +1,45 @@
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    vector<string> reorderLogFiles(vector<string>& logs) {
+        // Custom comparator for sorting
+        auto cmp = [](const string& log1, const string& log2) {
+            // Split log1 into identifier and content
+            int pos1 = log1.find(' ');
+            string id1 = log1.substr(0, pos1);
+            string content1 = log1.substr(pos1 + 1);
+
+            // Split log2 into identifier and content
+            int pos2 = log2.find(' ');
+            string id2 = log2.substr(0, pos2);
+            string content2 = log2.substr(pos2 + 1);
+
+            bool isDigit1 = isdigit(content1[0]);
+            bool isDigit2 = isdigit(content2[0]);
+
+            // If both are letter-logs, compare by content, then identifier
+            if (!isDigit1 && !isDigit2) {
+                if (content1 != content2)
+                    return content1 < content2;
+                return id1 < id2;
+            }
+
+            // If one is letter-log and the other digit-log, letter-log comes first
+            if (!isDigit1 && isDigit2)
+                return true;
+            if (isDigit1 && !isDigit2)
+                return false;
+
+            // Both digit-logs: maintain original order
+            return false;
+        };
+
+        stable_sort(logs.begin(), logs.end(), cmp);
+
+        return logs;
+    }
+};
