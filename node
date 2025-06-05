@@ -1,0 +1,56 @@
+class Node;
+int data;
+Node next;
+node(int data){
+this.data=data;
+this.next=null;
+}
+}
+class stack{
+private Node top:
+public stack(){
+this.top=null;
+}
+public void push(int data){
+Node newNode=new Node(data);
+newNode.next=top;
+top=newNode;
+}
+public int pop()
+if(isEmpty()){
+System.out.println("stack underflow !cannot pop from an empty stack.");
+return-1;
+}
+int poppedData=top.data;
+top=top.nextreturn poppedData
+}
+public int peek(){
+if(isEmpty()){
+System.out.println("stack is empty!");
+return-1;
+}
+return top.data;
+}
+public boolean isEmpty(){
+return top=null;
+}
+public void display(){
+if(isEmpty()){
+System.out.println("stack is empty");
+return;
+}
+Node temp=top;
+while(temp!=null){
+System.out.print(temp.data+".>");
+temp=temp.next;
+}
+System.out.println("None");
+}
+}
+public class main{
+public static void main(string[] args){
+stack stack=new stack();
+stack.push(10);
+stack.push(20);
+stack.push(30);
+stack.display():output:30->20->10->None
