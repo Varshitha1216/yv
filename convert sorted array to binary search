@@ -1,0 +1,74 @@
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Main obj = new Main();
+        int[] nums = {-10, -3, 0, 5, 9};
+        TreeNode root = obj.sortedArrayToBST(nums);
+
+        // Print level-order traversal with nulls
+        levelOrderWithNulls(root);
+    }
+
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums.length == 0) return null;
+        return getBst(nums, 0, nums.length - 1);
+    }
+
+    public static TreeNode getBst(int[] arr, int startIdx, int endIdx) {
+        if (startIdx > endIdx) return null;
+        int mid = (startIdx + endIdx + 1) / 2;  
+        TreeNode bst = new TreeNode(arr[mid]);
+        bst.left = getBst(arr, startIdx, mid - 1);
+        bst.right = getBst(arr, mid + 1, endIdx);
+        return bst;
+    }
+
+    // Level order traversal with nulls
+    public static void levelOrderWithNulls(TreeNode root) {
+        if (root == null) {
+            System.out.println("null");
+            return;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        List<String> result = new ArrayList<>();
+
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+
+            if (curr == null) {
+                result.add("null");
+            } else {
+                result.add(String.valueOf(curr.val));
+                queue.offer(curr.left);
+                queue.offer(curr.right);
+            }
+        }
+
+        // Remove trailing "null"s for clean output
+        int i = result.size() - 1;
+        while (i >= 0 && result.get(i).equals("null")) {
+            result.remove(i);
+            i--;
+        }
+
+        System.out.println(String.join(", ", result));
+    }
+}
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
