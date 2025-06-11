@@ -1,0 +1,61 @@
+import java.util.Scanner;
+
+class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Ask user for the number of elements
+        System.out.print("Enter the number of elements: ");
+        int n = sc.nextInt();
+        int[] nums = new int[n];
+
+        // Read the array elements
+        System.out.println("Enter the elements:");
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        // Sort the array
+        sortArray(nums);
+
+        // Print the sorted array
+        System.out.println("Sorted array:");
+        for (int num : nums) {
+            System.out.print(num + " ");
+        }
+    }
+
+    public static int[] sortArray(int[] nums) {
+        quick(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    static void quick(int[] nums, int low, int high) {
+        if (low >= high) return;
+
+        int s = low;
+        int e = high;
+        int mid = (s + e) / 2;
+        int pivot = nums[mid];
+
+        while (s <= e) {
+            while (nums[s] < pivot) {
+                s++;
+            }
+            while (nums[e] > pivot) {
+                e--;
+            }
+
+            if (s <= e) {
+                int temp = nums[s];
+                nums[s] = nums[e];
+                nums[e] = temp;
+                s++;
+                e--;
+            }
+        }
+
+        quick(nums, low, e);
+        quick(nums, s, high);
+    }
+}
