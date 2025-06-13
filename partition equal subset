@@ -1,0 +1,32 @@
+import java.util.Arrays;
+
+public class Main {
+    public boolean canPartition(int[] nums) {
+        int total = Arrays.stream(nums).sum();
+        if (total % 2 != 0) return false;
+
+        int target = total / 2;
+        boolean[] dp = new boolean[target + 1];
+        dp[0] = true;
+
+        for (int n : nums) {
+            for (int i = target; i >= n; i--) {
+                if (dp[i]) continue;
+                if (dp[i - n]) dp[i] = true;
+                if (dp[target]) return true;
+            }
+        }
+
+        return false;        
+    }
+
+    public static void main(String[] args) {
+        Main solution = new Main();
+
+        int[] nums1 = {1, 5, 11, 5};
+        System.out.println("Can partition {1, 5, 11, 5}: " + solution.canPartition(nums1));  // true
+
+        int[] nums2 = {1, 2, 3, 5};
+        System.out.println("Can partition {1, 2, 3, 5}: " + solution.canPartition(nums2));  // false
+    }
+}
