@@ -1,0 +1,40 @@
+public class Main {
+
+    // Memoization array
+    static int[][] memo;
+
+    // Recursive LCS with memoization
+    public static int lcs_memo(String x, String y, int m, int n) {
+        // Base case
+        if (m == 0 || n == 0) return 0;
+
+        // If already computed, return the stored value
+        if (memo[m][n] != -1) return memo[m][n];
+
+        if (x.charAt(m - 1) == y.charAt(n - 1)) {
+            memo[m][n] = 1 + lcs_memo(x, y, m - 1, n - 1);
+        } else {
+            memo[m][n] = Math.max(lcs_memo(x, y, m - 1, n), lcs_memo(x, y, m, n - 1));
+        }
+        return memo[m][n];
+    }
+
+    public static void main(String[] args) {
+        String s1 = "abcdxyz";
+        String s2 = "xyzabcd";
+
+        int m = s1.length();
+        int n = s2.length();
+
+        // Initialize memoization array with -1
+        memo = new int[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                memo[i][j] = -1;
+            }
+        }
+
+        int lcsLength = lcs_memo(s1, s2, m, n);
+        System.out.println("Length of Longest Common Subsequence (Memoization): " + lcsLength);
+    }
+}
