@@ -1,0 +1,40 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+    private Map<String, Integer> memo = new HashMap<>();
+
+    public int findTargetSumWays(int[] nums, int target) {
+        return dfs(nums, target, 0, 0);
+    }
+
+    private int dfs(int[] nums, int target, int index, int currentSum) {
+        if (index == nums.length) {
+            return currentSum == target ? 1 : 0;
+        }
+
+        String key = index + "," + currentSum;
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
+
+        int add = dfs(nums, target, index + 1, currentSum + nums[index]);
+        int subtract = dfs(nums, target, index + 1, currentSum - nums[index]);
+
+        int totalWays = add + subtract;
+        memo.put(key, totalWays);
+
+        return totalWays;
+    }
+
+    public static void main(String[] args) {
+        Main solution = new Main();
+
+        // Example input
+        int[] nums = {1, 1, 1, 1, 1};
+        int target = 3;
+
+        int result = solution.findTargetSumWays(nums, target);
+        System.out.println("Number of ways to reach target " + target + ": " + result);
+    }
+}
