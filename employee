@@ -1,0 +1,20 @@
+class Student{
+    String name="varshitha";
+    int roll=27;
+    String branch="EEE";
+    float cgpa=8.6f;
+}
+class Employee{
+    String name="ravi";
+    String role="python dev";
+    int id=1216;
+    float salary=70000.9f;
+}
+class Main{
+    public static void main(String[] args){
+        Employee e=new Employee();
+        System.out.println("Name:"+e.name);
+        System.out.println("role:"+e.role);
+        System.out.println("salary:"+e.salary);
+    }
+}
